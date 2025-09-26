@@ -468,3 +468,11 @@
 #80 G:\\Laravel\\RideGo\\public_html\\server.php(21): require_once('G:\\\\Laravel\\\\Ride...')
 #81 {main}
 "} 
+[2025-09-26 16:28:59] local.ERROR: Declaration of Grimzy\LaravelMysqlSpatial\Doctrine\Geometry::getSQLDeclaration(array $fieldDeclaration, Doctrine\DBAL\Platforms\AbstractPlatform $platform) must be compatible with Doctrine\DBAL\Types\Type::getSQLDeclaration(array $column, Doctrine\DBAL\Platforms\AbstractPlatform $platform): string {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Declaration of Grimzy\\LaravelMysqlSpatial\\Doctrine\\Geometry::getSQLDeclaration(array $fieldDeclaration, Doctrine\\DBAL\\Platforms\\AbstractPlatform $platform) must be compatible with Doctrine\\DBAL\\Types\\Type::getSQLDeclaration(array $column, Doctrine\\DBAL\\Platforms\\AbstractPlatform $platform): string at G:\\Laravel\\RideGo\\public_html\\vendor\\grimzy\\laravel-mysql-spatial\\src\\Doctrine\\Geometry.php:12)
+[stacktrace]
+#0 {main}
+"} 
+[2025-09-26 16:29:02] local.ERROR: Declaration of Grimzy\LaravelMysqlSpatial\Doctrine\Geometry::getSQLDeclaration(array $fieldDeclaration, Doctrine\DBAL\Platforms\AbstractPlatform $platform) must be compatible with Doctrine\DBAL\Types\Type::getSQLDeclaration(array $column, Doctrine\DBAL\Platforms\AbstractPlatform $platform): string {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Declaration of Grimzy\\LaravelMysqlSpatial\\Doctrine\\Geometry::getSQLDeclaration(array $fieldDeclaration, Doctrine\\DBAL\\Platforms\\AbstractPlatform $platform) must be compatible with Doctrine\\DBAL\\Types\\Type::getSQLDeclaration(array $column, Doctrine\\DBAL\\Platforms\\AbstractPlatform $platform): string at G:\\Laravel\\RideGo\\public_html\\vendor\\grimzy\\laravel-mysql-spatial\\src\\Doctrine\\Geometry.php:12)
+[stacktrace]
+#0 {main}
+"} 
