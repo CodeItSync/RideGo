@@ -12,10 +12,10 @@ use App\Notifications\FirebaseNotify;
 use Illuminate\Support\Facades\DB;
 
 trait PaymentTrait {
-    
+
     public function walletTransaction($ride_request_id) {
         $ride_request = RideRequest::where('id', $ride_request_id)->first();
-        
+
         if( $ride_request == null ) {
             return false;
         }
@@ -27,7 +27,7 @@ trait PaymentTrait {
         $admin_commission = $ride_request->service->admin_commission ?? 0;
 
         $fleet_id = optional($ride_request->driver)->fleet_id;
-        
+
         $fleet_commission = 0;
         if( $fleet_id != null ) {
             $fleet_commission = $ride_request->service->fleet_commission ?? 0;
@@ -45,7 +45,7 @@ trait PaymentTrait {
                 $fleet_commission = $fleet_commission ? ( $ride_request_amount / 100) * $fleet_commission: 0;
             }
         }
-        
+
         if( $payment->payment_type == 'cash') {
             $payment->received_by = 'driver';
         } elseif ($payment->payment_type == 'wallet') {
@@ -61,7 +61,7 @@ trait PaymentTrait {
         $payment->driver_tips = $driver_tips;
         $payment->driver_commission = $driver_fee + $driver_tips + $ride_request->extra_charges_amount;
         $payment->save();
-        
+
         // $currency = optional($ride_request->service) && optional($ride_request->service)->region ? optional($ride_request->service)->region->currency_code : null;
 
         $currency_code = SettingData('CURRENCY', 'CURRENCY_CODE') ?? 'USD';
@@ -96,11 +96,11 @@ trait PaymentTrait {
                 $admin_wallet = Wallet::firstOrCreate(
                     [ 'user_id' => $admin_id ]
                 );
-                
+
                 $admin_wallet->total_amount = $admin_wallet->total_amount + $admin_commission;
                 $admin_wallet->save();
 
-                $admin_wallet_history = [ 
+                $admin_wallet_history = [
                     'user_id'           => $admin_id,
                     'type'              => 'credit',
                     'transaction_type'  => 'admin_commission',
@@ -122,7 +122,7 @@ trait PaymentTrait {
                     $fleet_wallet->total_amount = $fleet_wallet->total_amount + $fleet_commission;
                     $fleet_wallet->save();
 
-                    $fleet_wallet_history = [ 
+                    $fleet_wallet_history = [
                         'user_id'           => $fleet_id,
                         'type'              => 'credit',
                         'transaction_type'  => 'fleet_commision',
@@ -157,7 +157,7 @@ trait PaymentTrait {
                     'ride_request_id'   => $payment->ride_request_id,
                     'data' => [
                         'payment_id'    => $payment->id,
-                        'tips'          => $payment->driver_tips,                    
+                        'tips'          => $payment->driver_tips,
                     ]
                 ];
                 WalletHistory::create($driver_wallet_history);
@@ -168,7 +168,7 @@ trait PaymentTrait {
                 $admin_wallet->total_amount = $admin_wallet->total_amount + $admin_commission;
                 $admin_wallet->save();
 
-                $admin_wallet_history = [ 
+                $admin_wallet_history = [
                     'user_id'           => $admin_id,
                     'type'              => 'credit',
                     'transaction_type'  => 'admin_commission',
@@ -188,7 +188,7 @@ trait PaymentTrait {
                 );
                 $driver_wallet->total_amount -= $admin_commission;
                 $driver_wallet->save();
-                
+
                 // start of add 1 for every 30
                 $rider = User::find($payment->rider_id);
                 $rider->last_wallet_cash_added += $result->total_amount;
@@ -205,9 +205,23 @@ trait PaymentTrait {
                     );
                     $rider_wallet->total_amount += $wins;
                     $rider_wallet->save();
-                    $rider->notify(new FirebaseNotify(['title' => 'تمت اضافة الهدية', 'body' => "لقد تمت اضافة هدية مقدمة من RideGo لك بقيمة $wins ريال٬ يمكنك الاستفادة منها بالمحفظة", 'data'=> [
-                        'clickable' => '0',
-                    ]]));
+                    if ($rider->lang == 'ar') {
+                        $rider->notify(new FirebaseNotify([
+                            'title' => 'تمت اضافة الهدية',
+                            'body' => "لقد تمت اضافة هدية مقدمة من RideGo لك بقيمة $wins ريال٬ يمكنك الاستفادة منها بالمحفظة",
+                            'data'=> [
+                                'clickable' => '0',
+                            ]
+                        ]));
+                    } else {
+                        $rider->notify(new FirebaseNotify([
+                            'title' => 'Gift Added',
+                            'body' => "A gift from RideGo worth $wins QAR has been added for you. You can use it in your wallet.",
+                            'data'=> [
+                                'clickable' => '0',
+                            ]
+                        ]));
+                    }
                 }
                 // end of add 1 for every 30
 
@@ -230,7 +244,7 @@ trait PaymentTrait {
                     $fleet_wallet->total_amount = $fleet_wallet->total_amount + $fleet_commission;
                     $fleet_wallet->save();
 
-                    $fleet_wallet_history = [ 
+                    $fleet_wallet_history = [
                         'user_id'           => $fleet_id,
                         'type'              => 'credit',
                         'transaction_type'  => 'fleet_commision',
@@ -245,13 +259,13 @@ trait PaymentTrait {
                     ];
                     WalletHistory::create($fleet_wallet_history);
 
-                
+
                     $driver_wallet = Wallet::firstOrCreate(
                         [ 'user_id' => $ride_request->driver_id ]
                     );
                     $driver_wallet->total_amount -= $fleet_commission;
                     $driver_wallet->save();
-        
+
                     $driver_wallet_history = [
                         'user_id'           => $ride_request->driver_id,
                         'type'              => 'debit',
@@ -263,7 +277,7 @@ trait PaymentTrait {
                         'datetime'          => date('Y-m-d H:i:s'),
                     ];
                     WalletHistory::create($driver_wallet_history);
-                
+
                 }
             }else {
                 $driver_wallet = Wallet::firstOrCreate(
@@ -283,7 +297,7 @@ trait PaymentTrait {
                     'datetime'          => date('Y-m-d H:i:s'),
                     'data' => [
                         'payment_id'    => $payment->id,
-                        'tips'          => $payment->driver_tips,                    
+                        'tips'          => $payment->driver_tips,
                     ]
                 ];
                 WalletHistory::create($driver_wallet_history);
@@ -296,7 +310,7 @@ trait PaymentTrait {
                 $admin_wallet->total_amount += $admin_commission;
                 $admin_wallet->save();
 
-                $admin_wallet_history = [ 
+                $admin_wallet_history = [
                     'user_id'           => $admin_id,
                     'type'              => 'credit',
                     'transaction_type'  => 'admin_commission',
@@ -335,7 +349,7 @@ trait PaymentTrait {
                     $fleet_wallet->total_amount = $fleet_wallet->total_amount + $fleet_commission;
                     $fleet_wallet->save();
 
-                    $fleet_wallet_history = [ 
+                    $fleet_wallet_history = [
                         'user_id'           => $fleet_id,
                         'type'              => 'credit',
                         'transaction_type'  => 'fleet_commision',
@@ -355,7 +369,7 @@ trait PaymentTrait {
                     );
                     $admin_wallet->total_amount -= $fleet_commission;
                     $admin_wallet->save();
-        
+
                     $admin_wallet_history = [
                         'user_id'           => $ride_request->driver_id,
                         'type'              => 'debit',
@@ -375,7 +389,7 @@ trait PaymentTrait {
             DB::rollBack();
             return json_custom_response($e);
         }
-        
+
         return true;
     }
 }

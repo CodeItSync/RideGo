@@ -121,7 +121,7 @@ class RideRequestController extends Controller
 
     public function completeRideRequest(Request $request)
     {
-        
+
         $id = $request->id;
         $ride_request = RideRequest::where('id', $id)->first();
         // \Log::info('riderequest:'.json_encode($request->all()));
@@ -326,7 +326,7 @@ class RideRequestController extends Controller
             $_user->notify(
                 new FirebaseNotify(
                     [
-                        'title' => 'rating',
+                        'title' => __('rating'),
                         'body' => $msg,
                         'data' => $notification_data,
                     ],
@@ -344,7 +344,7 @@ class RideRequestController extends Controller
             $_user->notify(
                 new FirebaseNotify(
                     [
-                        'title' => 'rating',
+                        'title' => __('rating'),
                         'body' => $msg,
                         'data' => $notification_data,
                     ],

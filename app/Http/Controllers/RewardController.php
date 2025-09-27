@@ -52,7 +52,12 @@ class RewardController extends Controller
         if ($request->has('id') and $request->id) {
             $user = User::where('id', $request->id)->first();
             $this->updateWallet($user->id, $amount, $currency);
-            $user->notify(new FirebaseNotify(['title' => 'RideGo', 'body' => "$textEnglish\n$textArabic", 'data' => [
+            if ($user->lang == 'ar') {
+                $text = $textArabic;
+            } else {
+                $text = $textEnglish;
+            }
+            $user->notify(new FirebaseNotify(['title' => 'RideGo', 'body' => "$text", 'data' => [
                 'clickable' => '1',
             ]]));
         } else {
@@ -62,8 +67,13 @@ class RewardController extends Controller
             }
             $users->chunk(100, function ($users) use($amount, $currency, $textEnglish, $textArabic) {
                 foreach ($users as $user) {
+                    if ($user->lang == 'ar') {
+                        $text = $textArabic;
+                    } else {
+                        $text = $textEnglish;
+                    }
                     $this->updateWallet($user->id, $amount, $currency);
-                    $user->notify(new FirebaseNotify(['title' => 'RideGo', 'body' => "$textEnglish\n$textArabic", 'data' => [
+                    $user->notify(new FirebaseNotify(['title' => 'RideGo', 'body' => "$text", 'data' => [
                         'clickable' => '1',
                     ]]));
                 }
@@ -71,7 +81,7 @@ class RewardController extends Controller
         }
         return redirect()->back()->withSuccess(__('message.save_form', ['form' => '']));
     }
-    
+
     public function updateWallet($userId, $amount, $currency) {
         $wallet =  Wallet::firstOrCreate(
             [ 'user_id' => $userId ]
@@ -87,14 +97,14 @@ class RewardController extends Controller
             'balance' => $wallet->total_amount,
             'datetime'  => date('Y-m-d H:i:s'),
         ];
-                
+
         WalletHistory::create($wallet_history);
         Reward::create([
             'user_id' => $userId,
             'amount' => $amount,
         ]);
     }
-    
+
     public function users_search(Request $request)
     {
         $search = $request->input('q');
@@ -106,7 +116,7 @@ class RewardController extends Controller
             ])
             ->when($search, fn($q) => $q->where('display_name', 'like', "%{$search}%"))
             ->paginate(20);
-    
+
         return response()->json([
             'items' => $users->items(),
             'pagination' => [
