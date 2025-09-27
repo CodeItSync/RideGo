@@ -186,6 +186,9 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
+
+        \Carbon\Carbon::setLocale('en');
+        app()->setLocale('en');
         $user = User::where([
             ['contact_number', request('mobile')],
         ])->first();
@@ -239,7 +242,7 @@ class UserController extends Controller
             $input = $request->all();
 
             $input['user_type'] = isset($input['user_type']) ? $input['user_type'] : 'rider';
-    
+
             $user = User::find(\auth()->id());
             $user->display_name = $input['first_name'] . " " . $input['last_name'];
             $user->first_name = $input['first_name'];
@@ -256,13 +259,13 @@ class UserController extends Controller
                 'bank_name' => $input['bank_name'] ?? null,
                 'account_iban' => $input['account_iban'] ?? null,
             ];
-            
+
             if ($user->userBankAccount != null) {
                 $user->userBankAccount->fill($user_bank_account)->update();
             } else {
                 $user->userBankAccount()->create($user_bank_account);
             }
-    
+
             $message = __('message.save_form', ['form' => __('message.' . $input['user_type'])]);
             return json_custom_response([
                 'data' => $user,
@@ -373,7 +376,7 @@ class UserController extends Controller
         }
 
         $user_data = User::find($user->id);
-        
+
         // for complete car info images
         if ($request->hasFile('id_card_photo')) {
             $idCardPath = $request->file('id_card_photo')->store('uploads/id_cards', 'public');
@@ -383,7 +386,7 @@ class UserController extends Controller
             $user_data->status = 'pending';
             $user_data->save();
         }
-        
+
         if ($request->hasFile('driving_licence_photo')) {
             $drivingLicencePath = $request->file('driving_licence_photo')->store('uploads/licences', 'public');
             $request->merge(['user_detail' => array_merge($request->user_detail ?? [], [
@@ -392,7 +395,7 @@ class UserController extends Controller
             $user_data->status = 'pending';
             $user_data->save();
         }
-        
+
         if ($request->hasFile('car_registration_photo')) {
             $carRegistrationPath = $request->file('car_registration_photo')->store('uploads/registrations', 'public');
             $request->merge(['user_detail' => array_merge($request->user_detail ?? [], [
