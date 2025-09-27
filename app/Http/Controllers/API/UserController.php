@@ -233,7 +233,7 @@ class UserController extends Controller
 
             return json_custom_response(['data' => $success], 200);
         }
-        return json_message_response(__('message.invalid_code'), 400);
+        return json_message_response('test', 400);
     }
 
     public function completeProfile(UserRequest $request)
