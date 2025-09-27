@@ -17,7 +17,7 @@ class ApiLanguageMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $locale = $request->header('locale') ?? 'en';
+        $locale = $request->header('lang') ?? 'en';
         \Carbon\Carbon::setLocale($locale);
         app()->setLocale($locale);
         return $next($request);
