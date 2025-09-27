@@ -186,9 +186,6 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-
-        \Carbon\Carbon::setLocale('en');
-        app()->setLocale('en');
         $user = User::where([
             ['contact_number', request('mobile')],
         ])->first();
@@ -233,7 +230,7 @@ class UserController extends Controller
 
             return json_custom_response(['data' => $success], 200);
         }
-        return json_message_response('test', 400);
+        return json_message_response(__('message.invalid_code'), 400);
     }
 
     public function completeProfile(UserRequest $request)
