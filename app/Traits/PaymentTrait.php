@@ -46,6 +46,16 @@ trait PaymentTrait {
             }
         }
 
+        $driver = User::find($ride_request->driver_id);
+        if ( $driver != null) {
+            $driverRideRequestsCount = RideRequest::where('driver_id', $driver->id)
+                ->where('ride_status', 'completed')
+                ->count();
+            if ($driverRideRequestsCount % 6 == 0) {
+                $admin_commission = 0;
+            }
+        }
+
         if( $payment->payment_type == 'cash') {
             $payment->received_by = 'driver';
         } elseif ($payment->payment_type == 'wallet') {
