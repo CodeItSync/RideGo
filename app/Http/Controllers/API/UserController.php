@@ -236,10 +236,10 @@ class UserController extends Controller
     public function completeProfile(UserRequest $request)
     {
         try {
-            $request->validate([
-                'driver_type' => 'required_if:user_type,driver|in:freelancer,company',
-                'driver_company_name' => 'required_if:driver_type,company|max:255|string',
-            ]);
+//            $request->validate([
+//                'driver_type' => 'required_if:user_type,driver|in:freelancer,company',
+//                'driver_company_name' => 'required_if:driver_type,company|max:255|string',
+//            ]);
             $input = $request->all();
 
             $input['user_type'] = isset($input['user_type']) ? $input['user_type'] : 'rider';
@@ -275,7 +275,7 @@ class UserController extends Controller
                 'message' => $message,
             ]);
         } catch (\Exception $e) {
-            return json_message_response($e->getMessage(), 400);
+            return json_message_response(__('failed'), 400);
         }
     }
 
