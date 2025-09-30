@@ -393,7 +393,6 @@ class UserController extends Controller
             $user_data->status = 'pending';
             $user_data->save();
         }
-        return json_message_response(__('The company name field is required.'), 400);
 
         if ($request->hasFile('driving_licence_photo')) {
             $drivingLicencePath = $request->file('driving_licence_photo')->store('uploads/licences', 'public');

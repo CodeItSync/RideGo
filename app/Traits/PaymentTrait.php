@@ -53,6 +53,23 @@ trait PaymentTrait {
                 ->count();
             if ($driverRideRequestsCount % 6 == 0) {
                 $admin_commission = 0;
+                if ($driver->lang == 'ar') {
+                    $driver->notify(new FirebaseNotify([
+                        'title' => 'تهانينا!',
+                        'body' => "لقد ربحت الرحلة الذهبية معنا٬ هذه الرحلة ستكون بدون عمولة٬ استمتع بقيادة مربحة!",
+                        'data'=> [
+                            'clickable' => '0',
+                        ]
+                    ]));
+                } else {
+                    $driver->notify(new FirebaseNotify([
+                        'title' => 'Congratulations!',
+                        'body' => "You have won the golden ride with us, this ride will be commission-free, enjoy a profitable drive!",
+                        'data'=> [
+                            'clickable' => '0',
+                        ]
+                    ]));
+                }
             }
         }
 
