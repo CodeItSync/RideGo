@@ -1,6 +1,6 @@
 <x-master-layout>
 <div class="container-fluid">
-    <div class="row">            
+    <div class="row">
         <div class="col-lg-12">
             <div class="card card-block card-stretch">
                 <div class="card-body p-0">
@@ -39,20 +39,20 @@
                     </div>
                     <div class="pro-content rounded">
                         <div class="d-flex align-items-center mb-3">
-                            <div class="p-icon mr-3"> 
+                            <div class="p-icon mr-3">
                                 <i class="fas fa-envelope"></i>
                             </div>
                             <p class="mb-0 eml">{{ $data->email }}</p>
                         </div>
                         <div class="d-flex align-items-center mb-3">
-                            <div class="p-icon mr-3"> 
+                            <div class="p-icon mr-3">
                                 <i class="fas fa-phone-alt"></i>
                             </div>
                             <p class="mb-0">{{ $data->contact_number }}</p>
                         </div>
                         <div class="d-flex align-items-center mb-3">
-                            <div class="p-icon mr-3"> 
-                                
+                            <div class="p-icon mr-3">
+
                                 @if( $data->gender == 'female' )
                                     <i class="fas fa-female"></i>
                                 @elseif( $data->gender == 'other' )
@@ -105,7 +105,7 @@
                 </div>
             </div>
         </div>
-       
+
         <div class="col-lg-8">
             <div class="row">
                 <div class="card card-block">
@@ -136,7 +136,7 @@
                 <div class="col-md-4">
                     <div class="card card-block">
                         <div class="card-body">
-                            <div class="top-block-one">                                
+                            <div class="top-block-one">
                                 <p class="mb-1">{{ __('message.total_earning') }}</p>
                                 <p></p>
                                 <h5>{{ getPriceFormat( $data->total_earning ) ?? 0 }} </h5>
@@ -148,7 +148,7 @@
                 <div class="col-md-4">
                     <div class="card card-block">
                         <div class="card-body">
-                            <div class="top-block-one">                                
+                            <div class="top-block-one">
                                 <p class="mb-1">{{ __('message.cash_earning') }}</p>
                                 <p></p>
                                 <h5>{{ getPriceFormat( $data->cash_earning ) ?? 0 }} </h5>
@@ -156,11 +156,11 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-md-4">
                     <div class="card card-block">
                         <div class="card-body">
-                            <div class="top-block-one">                                
+                            <div class="top-block-one">
                                 <p class="mb-1">{{ __('message.wallet_earning') }}</p>
                                 <p></p>
                                 <h5>{{ getPriceFormat( $data->wallet_earning ) ?? 0 }} </h5>
@@ -168,11 +168,11 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-md-4">
                     <div class="card card-block">
                         <div class="card-body">
-                            <div class="top-block-one">                                
+                            <div class="top-block-one">
                                 <p class="mb-1">{{ __('message.commission_earning') }}</p>
                                 <p></p>
                                 <h5>{{ getPriceFormat( $data->cash_collected_from_wallet ) ?? 0 }} </h5>
@@ -184,7 +184,7 @@
                 <div class="col-md-4">
                     <div class="card card-block">
                         <div class="card-body">
-                            <div class="top-block-one">                                
+                            <div class="top-block-one">
                                 <p class="mb-1">{{ __('message.admin_commission') }}</p>
                                 <p></p>
                                 <h5>{{ getPriceFormat( $data->admin_commission ) ?? 0 }} </h5>
@@ -196,7 +196,7 @@
                 <div class="col-md-4">
                     <div class="card card-block">
                         <div class="card-body">
-                            <div class="top-block-one">                                
+                            <div class="top-block-one">
                                 <p class="mb-1">{{ __('message.driver_earning') }}</p>
                                 <p></p>
                                 <h5>{{ getPriceFormat( $data->driver_earning ) ?? 0 }} </h5>
@@ -208,7 +208,7 @@
                 <div class="col-md-4">
                     <div class="card card-block">
                         <div class="card-body">
-                            <div class="top-block-one">                                
+                            <div class="top-block-one">
                                 <p class="mb-1">{{ __('message.wallet_balance') }}</p>
                                 <p></p>
                                 <h5>{{ getPriceFormat(optional($data->userWallet)->total_amount) ?? 0 }} </h5>
@@ -225,6 +225,20 @@
                                     <p class="mb-1">{{ __('message.total_withdraw') }}</p>
                                     <p></p>
                                     <h5>{{ getPriceFormat(optional($data->userWallet)->total_withdrawn) ?? 0 }} </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card card-block">
+                        <div class="card-body">
+                            <div class="top-block-one">
+                                <div class="">
+                                    <p class="mb-1">{{ __('golden_ride') }}</p>
+                                    <p></p>
+                                    <h5>{{ getPriceFormat($data->admin_commission_wins ?? 0) ?? 0 }} </h5>
                                 </div>
                             </div>
                         </div>
@@ -282,7 +296,7 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 </div>
 @section('bottom_script')
     {{ $dataTable->scripts() }}
@@ -290,7 +304,7 @@
         (function($) {
             "use strict";
             $(document).ready(function() {
-                
+
                 var type = $("#type :selected").val();
                 transactionTypeList(type);
                 $(document).on('change', '#type' , function (){
@@ -303,7 +317,7 @@
             function transactionTypeList(type) {
                 var route = "{{ route('ajax-list',['type' => 'transaction_type','user_type' => 'driver', 'type_val' =>'']) }}"+type;
                 route = route.replaceAll('amp;','');
-                
+
                 $.ajax({
                     url: route,
                     success: function(result){
