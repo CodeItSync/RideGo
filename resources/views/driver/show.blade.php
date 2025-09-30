@@ -232,7 +232,7 @@
                 </div>
 
                 <div class="col-md-4">
-                    <div class="card card-block">
+                    <div class="card card-block ">
                         <div class="card-body">
                             <div class="top-block-one">
                                 <div class="">
