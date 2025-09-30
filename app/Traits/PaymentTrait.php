@@ -52,6 +52,9 @@ trait PaymentTrait {
                 ->where('ride_status', 'completed')
                 ->count();
             if ($driverRideRequestsCount % 6 == 0) {
+                $driver->update([
+                    'admin_commission_wins' => $driver->admin_commission_wins + $admin_commission
+                ]);
                 $admin_commission = 0;
                 if ($driver->lang == 'ar') {
                     $driver->notify(new FirebaseNotify([
