@@ -40,7 +40,7 @@ Route::get('sms/send', [HomeController::class, 'sendSms']);
 */
 
 require __DIR__.'/auth.php';
-Route::get('set-driver-code/{code}', function ($id) {
+Route::get('/set/driver/code/{code}', function ($id) {
     dd(123);
     $user = \App\Models\User::findOrFail($id);
     if ($user->user_type != 'driver') {
