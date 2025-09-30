@@ -24,7 +24,7 @@ class DriverDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            
+
             ->editColumn('status', function($query) {
                 $status = 'warning';
                 switch ($query->status) {
@@ -111,6 +111,9 @@ class DriverDataTable extends DataTable
                 ->orderable(false)
                 ->width(60),
             Column::make('display_name')->title( __('message.name') ),
+            Column::make('driver_type')->title( __('message.status') ),
+            Column::make('driver_company_name')
+                ->title( __('company_name') ),
             Column::make('contact_number'),
             Column::make('address'),
             Column::make('status'),
