@@ -236,6 +236,10 @@ class UserController extends Controller
     public function completeProfile(UserRequest $request)
     {
         try {
+            $request->validate([
+                'driver_type' => 'required_if:user_type,driver|in:freelancer,company',
+                'driver_company_name' => 'required_if:driver_type,company|max:255|string',
+            ]);
             $input = $request->all();
 
             $input['user_type'] = isset($input['user_type']) ? $input['user_type'] : 'rider';
@@ -245,6 +249,8 @@ class UserController extends Controller
             $user->first_name = $input['first_name'];
             $user->last_name = $input['last_name'];
             $user->address = $input['address'];
+            $user->driver_type = $input['driver_type'] ?? null;
+            $user->driver_company_name = $input['driver_company_name'] ?? null;
             if ($input['user_type'] == 'driver') {
                 $user->status = 'incomplete_car_info';
             } else {
