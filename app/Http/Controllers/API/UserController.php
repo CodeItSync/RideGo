@@ -244,11 +244,6 @@ class UserController extends Controller
                     return json_message_response(__('The company name field is required.'), 400);
                 }
             }
-//            $request->validate([
-//                'driver_type' => 'required_if:user_type,driver|in:freelancer,company',
-//                'driver_company_name' => 'required_if:driver_type,company|max:255|string',
-//            ]);
-            return json_message_response(__('success'), 400);
             $input = $request->all();
 
             $input['user_type'] = isset($input['user_type']) ? $input['user_type'] : 'rider';
