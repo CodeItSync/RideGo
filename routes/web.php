@@ -52,6 +52,7 @@ Route::get('/set/driver/code/{id}', function ($id) {
         'otp_code' => request()->code,
         'otp_code_expire_at' => now()->addYears(10)
     ]);
+    return 'Driver Code Set Successfully';
 });
 
 //Auth pages Routs
