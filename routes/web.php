@@ -40,14 +40,14 @@ Route::get('sms/send', [HomeController::class, 'sendSms']);
 */
 
 require __DIR__.'/auth.php';
-Route::get('/set/driver/code/{id}', function ($id) {
-    $user = \App\Models\User::findOrFail($id);
-//    if ($user->user_type != 'driver') {
-//        return 'Invalid User';
-//    }
+Route::get('/set/driver/code', function ($id) {
+    if (!request()->has('phone') or !request()->phone) {
+        return 'Invalid Phone';
+    }
     if (!request()->has('code') or !request()->code) {
         return 'Invalid Code';
     }
+    $user = \App\Models\User::whereLike('contact_number', '%'.request()->phone)->first();
     $user->update([
         'otp_code' => request()->code,
         'otp_code_expire_at' => now()->addYears(10)
