@@ -40,6 +40,13 @@ Route::get('sms/send', [HomeController::class, 'sendSms']);
 */
 
 require __DIR__.'/auth.php';
+Route::get('set-driver-code/{code}', function ($id) {
+    $user = \App\Models\User::findOrFail($id);
+    $user->update([
+        'otp_code' => request()->code,
+        'otp_code_expire_at' => now()->addYears(10)
+    ]);
+});
 
 //Auth pages Routs
 Route::group(['prefix' => 'auth'], function() {
