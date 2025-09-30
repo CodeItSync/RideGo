@@ -275,7 +275,7 @@ class UserController extends Controller
                 'message' => $message,
             ]);
         } catch (\Exception $e) {
-            return json_message_response(__('failed'), 400);
+            return json_message_response($e->getMessage(), 400);
         }
     }
 
