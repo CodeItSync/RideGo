@@ -14,7 +14,7 @@ class AddAdminCommisionWinsToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('admin_commission_wins')->default(0);
+            $table->boolean('admin_commission_wins')->default(0.0);
         });
     }
 
