@@ -1,5 +1,7 @@
 {
     "rating": "التقييم",
     "company_name": "اسم الشركة",
-    "driver_status": "حالة السائق"
+    "driver_status": "حالة السائق",
+    "freelancer": "عامل حر",
+    "company": "شركة"
 }

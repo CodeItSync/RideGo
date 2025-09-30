@@ -1,5 +1,7 @@
 {
     "rating": "Rating",
     "company_name": "Company Name",
-    "driver_status": "Driver Status"
+    "driver_status": "Driver Status",
+    "freelancer": "Freelancer",
+    "company": "Company"
 }
