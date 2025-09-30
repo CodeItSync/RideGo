@@ -236,6 +236,14 @@ class UserController extends Controller
     public function completeProfile(UserRequest $request)
     {
         try {
+            if ($request->user_type == 'driver') {
+                if (!in_array($request->driver_type, ['freelancer', 'company'])) {
+                    return json_message_response(__('The driver status field is required.'), 400);
+                }
+                if ($request->driver_type == 'company' && (!$request->driver_company_name || $request->driver_company_name == '')) {
+                    return json_message_response(__('The company name field is required.'), 400);
+                }
+            }
 //            $request->validate([
 //                'driver_type' => 'required_if:user_type,driver|in:freelancer,company',
 //                'driver_company_name' => 'required_if:driver_type,company|max:255|string',

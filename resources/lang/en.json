@@ -3,5 +3,7 @@
     "company_name": "Company Name",
     "driver_status": "Driver Status",
     "freelancer": "Freelancer",
-    "company": "Company"
+    "company": "Company",
+    "The driver status field is required.": "The driver status field is required.",
+    "The company name field is required.": "The company name field is required."
 }
