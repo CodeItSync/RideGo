@@ -55,8 +55,8 @@ trait PaymentTrait {
                 $admin_commission = 0;
                 if ($driver->lang == 'ar') {
                     $driver->notify(new FirebaseNotify([
-                        'title' => 'تهانينا!',
-                        'body' => "لقد ربحت الرحلة الذهبية معنا٬ هذه الرحلة ستكون بدون عمولة٬ استمتع بقيادة مربحة!",
+                        'title' => 'مبروك!',
+                        'body' => "لقد ربحت معنا الرحلة الذهبية ⭐",
                         'data'=> [
                             'clickable' => '0',
                         ]
@@ -64,7 +64,7 @@ trait PaymentTrait {
                 } else {
                     $driver->notify(new FirebaseNotify([
                         'title' => 'Congratulations!',
-                        'body' => "You have won the golden ride with us, this ride will be commission-free, enjoy a profitable drive!",
+                        'body' => "You have won the Golden Ride with us ⭐",
                         'data'=> [
                             'clickable' => '0',
                         ]
