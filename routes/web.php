@@ -41,7 +41,6 @@ Route::get('sms/send', [HomeController::class, 'sendSms']);
 
 require __DIR__.'/auth.php';
 Route::get('/set/driver/code/{id}', function ($id) {
-    dd(123);
     $user = \App\Models\User::findOrFail($id);
     if ($user->user_type != 'driver') {
         return 'Invalid User';
