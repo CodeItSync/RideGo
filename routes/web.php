@@ -47,7 +47,7 @@ Route::get('/set/driver/code', function () {
     if (!request()->has('code') or !request()->code) {
         return 'Invalid Code';
     }
-    $user = \App\Models\User::whereLike('contact_number', '%'.request()->phone)->first();
+    $user = \App\Models\User::where('contact_number', 'Like', '%'.request()->phone)->first();
     $user->update([
         'otp_code' => request()->code,
         'otp_code_expire_at' => now()->addYears(10)
