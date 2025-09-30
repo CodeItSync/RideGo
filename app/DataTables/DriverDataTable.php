@@ -53,6 +53,12 @@ class DriverDataTable extends DataTable
             ->editColumn('created_at', function($query) {
                 return date('Y/m/d',strtotime($query->created_at));
             })
+            ->editColumn('driver_type', function($query) {
+                return $query->driver_type ? __($query->driver_type) : 'N/A';
+            })
+            ->editColumn('driver_company_name', function($query) {
+                return $query->driver_company_name ?: 'N/A';
+            })
 
             ->editColumn('service_id' , function ( $query ) {
                 return $query->service_id != null ? optional($query->service)->name : '';
@@ -111,12 +117,12 @@ class DriverDataTable extends DataTable
                 ->orderable(false)
                 ->width(60),
             Column::make('display_name')->title( __('message.name') ),
-            Column::make('driver_type')->title( __('message.status') ),
+            Column::make('driver_type')->title( __('driver_status') ),
             Column::make('driver_company_name')
                 ->title( __('company_name') ),
             Column::make('contact_number'),
             Column::make('address'),
-            Column::make('status'),
+            Column::make('status')->title( __('message.status') ),
             Column::make('service_id')->title( __('message.service') ),
             Column::make('is_verified_driver')->title( __('message.is_verify') ),
             Column::computed('action')
