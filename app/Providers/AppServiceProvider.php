@@ -8,6 +8,7 @@ use Illuminate\Database\Events\MigrationsStarted;
 use Illuminate\Database\Events\MigrationsEnded;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Event::listen(MigrationsEnded::class, function (){
-            DB::statement('SET SESSION sql_require_primary_key=1');            
+            DB::statement('SET SESSION sql_require_primary_key=1');
         });*/
     }
 
@@ -35,6 +36,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        if(env('APP_ENV') !== 'local') {
+            URL::forceScheme('https');
+        }
     }
 }
