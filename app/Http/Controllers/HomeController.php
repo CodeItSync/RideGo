@@ -39,24 +39,24 @@ class HomeController extends Controller
     {
         // $this->middleware('auth');
     }
-    
+
     public function sendSms() {
         // User::where('contact_number', 'NOT LIKE', '+974-%')->delete();
-        return 123;
+        return request()->server('SERVER_ADDR');
         // $client = new \SoapClient(null, [
         //     'location'   => "http://messaging.ooredoo.qa/bms/soap/Messenger.asmx",
         //     'uri'        => "http://pmmsoapmessenger.com/",
         //     'trace'      => 1,
         //     'exceptions' => true,
         // ]);
-        
+
         // $user = [
         //     'CustomerID' => 6903,
         //     'Name'       => 'Ridego123',
         //     'Password'   => 'Qatar@3025',
         //     'Language'   => 'en',
         // ];
-        
+
         // $params = [
         //     'user'          => $user,
         //     'originator'    => 'OoredooTest',
@@ -68,7 +68,7 @@ class HomeController extends Controller
         //     'flash'         => false,
         //     'private'       => false,
         // ];
-        
+
         // try {
         //     $response = $client->__soapCall("SendSms", [$params]);
         //     return "success";
@@ -79,16 +79,16 @@ class HomeController extends Controller
         // }
 
     }
-    
+
     public function export(Request $request)
     {
         $rows = [];
         $from = $request->from ?? now->addYears(-10);
         $to = $request->to ?? now();
-    
+
         return Excel::download(new MainExport($from, $to), 'ride_go_export.xlsx');
     }
-    
+
     public function notify_all(Request $request)
     {
         $request->validate([
