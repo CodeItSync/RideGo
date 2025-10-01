@@ -42,7 +42,7 @@ class HomeController extends Controller
 
     public function sendSms() {
         // User::where('contact_number', 'NOT LIKE', '+974-%')->delete();
-        return request()->server('SERVER_ADDR');
+        return 123;
         // $client = new \SoapClient(null, [
         //     'location'   => "http://messaging.ooredoo.qa/bms/soap/Messenger.asmx",
         //     'uri'        => "http://pmmsoapmessenger.com/",
