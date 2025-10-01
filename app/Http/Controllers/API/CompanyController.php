@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class CompanyController extends Controller
 {
 
-    public function userList(Request $request)
+    public function list(Request $request)
     {
         $items = CompanyResource::collection(
             Company::all()
