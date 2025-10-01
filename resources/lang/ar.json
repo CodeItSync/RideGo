@@ -6,5 +6,10 @@
     "company": "شركة",
     "The driver status field is required.": "حقل حالة السائق مطلوب.",
     "The company name field is required.": "حقل اسم الشركة مطلوب.",
-    "golden_ride": "الرحلة الذهبية"
+    "golden_ride": "الرحلة الذهبية",
+    "Company name" : "اسم الشركة",
+    "Companies" : "الشركات",
+    "Arabic" : "عربي",
+    "English" : "إنجليزي",
+    "Name" : "الاسم"
 }

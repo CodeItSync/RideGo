@@ -92,6 +92,7 @@ Route::group(['middleware' => ['auth', 'verified', 'admin']], function()
             Route::post('store', 'store')->name('store');
             Route::get('users/search', 'users_search')->name('users.search');
         });
+    Route::resource('companies', \App\Http\Controllers\CompanyController::class);
 
 	Route::resource('fleet', FleetController::class);
 	Route::resource('additionalfees', AdditionalFeesController::class);

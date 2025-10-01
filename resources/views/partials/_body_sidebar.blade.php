@@ -46,6 +46,18 @@
                 ->prepend('<i class="fas fa-plus-square"></i>')
                 ->link->attr(['class' => '']);
 
+        $menu->add('<span>'.__('Companies').'</span>', ['class' => ''])
+            ->prepend('<i class="fas fa-home"></i>')
+            ->nickname('company')
+            ->data('permission', 'company list')
+            ->link->attr(['class' => ''])
+            ->href('#company');
+
+            $menu->company->add('<span>'.__('message.list_form_title',['form' => __('Companies')]).'</span>', ['class' => 'sidebar-layout' ,'route' => 'companies.index'])
+                ->data('permission', 'company list')
+                ->prepend('<i class="fas fa-list"></i>')
+                ->link->attr(['class' => '']);
+
         $menu->add('<span>'.__('message.rewards').'</span>', ['class' => ''])
             ->prepend('<i class="fas fa-award"></i>')
             ->nickname('rewards')
