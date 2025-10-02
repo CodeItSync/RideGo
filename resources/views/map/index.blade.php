@@ -68,6 +68,7 @@
                 var infowindow = new google.maps.InfoWindow();
                 if(locations.length > 0 )
                 {
+                    console.log(markers);
                     for(i = 0 ; i < locations.length ; i++) {
                         // console.log("new "+locations[i].latitude, locations[i].longitude);
 
@@ -80,7 +81,7 @@
                             }
                         }
                         if (!markers[locations[i].id] ) {
-                            console.log('new add');
+                            console.log(locations[i].id);
                             if( locations[i].is_online === 1 && locations[i].is_available === 0) {
                                 taxicon = "{{ asset('images/ontrip.png') }}";
                             } else if( locations[i].is_online == 1 ) {
