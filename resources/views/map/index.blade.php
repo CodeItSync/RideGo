@@ -80,6 +80,7 @@
                             }
                         }
                         if (!(locations[i].id in markers) ) {
+                            console.log('new');
                             if( locations[i].is_online === 1 && locations[i].is_available === 0) {
                                 taxicon = "{{ asset('images/ontrip.png') }}";
                             } else if( locations[i].is_online == 1 ) {
