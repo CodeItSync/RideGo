@@ -50,7 +50,7 @@ class DriverResource extends JsonResource
             'rating' => count($this->driverRating) > 0 ? (float)number_format(max($this->driverRating->avg('rating'), 0), 2) : 0,
             'is_document_required' => $is_document_required,
             'last_location_update_at' => $this->last_location_update_at ? $this->last_location_update_at->format('Y-m-d H:i:s') : null,
-            'driverRideRequestDetails' => $this->driver_ride_request_details,
+            'driverRideRequestDetailss' => $this->driver_ride_request_details,
         ];
     }
 }
