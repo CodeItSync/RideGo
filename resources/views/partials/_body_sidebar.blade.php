@@ -247,6 +247,18 @@
                     ->prepend('<i class="fas fa-user-shield"></i>')
                     ->link->attr(['class' => '']);
 
+        $menu->add('<span>'.__('Drivers tracker').'</span>', ['class' => ''])
+            ->prepend('<i class="fas fa-car"></i>')
+            ->nickname('drivers_tracker')
+            ->data('permission', 'drivers_tracker list')
+            ->link->attr(['class' => ''])
+            ->href('#drivers_tracker');
+
+            $menu->drivers_tracker->add('<span>'.__('message.list_form_title',['form' => __('Drivers tracker')]).'</span>', ['class' => 'sidebar-layout' ,'route' => 'drivers_tracker.index'])
+                ->data('permission', 'drivers_tracker list')
+                ->prepend('<i class="fas fa-list"></i>')
+                ->link->attr(['class' => '']);
+
         $menu->add('<span>'.__('message.driver_location').'</span>', ['route' => 'map'])
                 ->prepend('<i class="fas fa-map"></i>')
                 ->nickname('map')

@@ -64,6 +64,12 @@ Route::group(['prefix' => 'auth'], function() {
     Route::get('lock-screen', [HomeController::class, 'authlockScreen'])->name('auth.lock-screen');
 });
 
+//Auth pages Routs
+Route::group(['prefix' => 'auth/tracker', 'as' => 'tracker.'], function() {
+    Route::get('login', [\App\Http\Controllers\TrackerControllers\HomeController::class, 'authLogin'])->name('auth.login');
+    Route::post('login', [\App\Http\Controllers\TrackerControllers\HomeController::class, 'authLogin'])->name('login');
+});
+
 Route::get('language/{locale}', [ HomeController::class, 'changeLanguage'])->name('change.language');
 Route::group(['middleware' => ['auth', 'verified', 'admin']], function()
 {
@@ -93,6 +99,7 @@ Route::group(['middleware' => ['auth', 'verified', 'admin']], function()
             Route::get('users/search', 'users_search')->name('users.search');
         });
     Route::resource('companies', \App\Http\Controllers\CompanyController::class);
+    Route::resource('drivers_tracker', \App\Http\Controllers\DriversTrackerController::class);
 
 	Route::resource('fleet', FleetController::class);
 	Route::resource('additionalfees', AdditionalFeesController::class);
@@ -162,3 +169,13 @@ Route::group(['middleware' => ['auth', 'verified', 'admin']], function()
 Route::get('/ajax-list',[ HomeController::class, 'getAjaxList' ])->name('ajax-list');
 
 Route::get('payment-success', [\App\Http\Controllers\WalletPaymentController::class, 'success']);
+
+Route::group(['middleware' => ['auth:tracker'], 'prefix' => 'tracker', 'as' => 'tracker.'], function()
+{
+    Route::get('/', [\App\Http\Controllers\TrackerControllers\HomeController::class, 'index'])->name('index');
+    Route::get('/home', [\App\Http\Controllers\TrackerControllers\HomeController::class, 'index'])->name('map');
+
+    Route::get('map-view',[ \App\Http\Controllers\TrackerControllers\HomeController::class, 'driverListMap' ])->name('driver_list.map');
+    Route::get('driver-detail', [ \App\Http\Controllers\TrackerControllers\HomeController::class, 'driverDetail' ] )->name('driverdetail');
+    Route::get('logout', [\App\Http\Controllers\TrackerControllers\HomeController::class, 'logout'])->name('logout');
+});

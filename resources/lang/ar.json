@@ -11,5 +11,10 @@
     "Companies" : "الشركات",
     "Arabic" : "عربي",
     "English" : "إنجليزي",
-    "Name" : "الاسم"
+    "Name" : "الاسم",
+    "Drivers tracker": "متتبع السائقين",
+    "Email" : "البريد الإلكتروني",
+    "Password" : "كلمة المرور",
+    "Drivers map" : "خريطة السائقين",
+    "Invalid Credentials": "بيانات اعتماد غير صالحة"
 }
