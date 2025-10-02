@@ -107,6 +107,14 @@
                                         '<li><i class="fa fa-clock" aria-hidden="true"></i>: '+last_location_update_at+'</li>'+
                                         '<li><a href="'+driver_view+'"><i class="fa fa-eye" aria-hidden="true"></i> {{ __("message.view_form_title",[ "form" => __("message.driver") ]) }}</a></li>'+
                                         '</ul></div>';
+                                        if (driver?.driver_ride_request_detail != null) {
+                                            // add start_address and end_address
+                                            contentString += '<div class="map_driver_detail"><ul class="list-unstyled mb-0">'+
+                                                '<li><i class="fa fa-map-marker" aria-hidden="true"></i>: {{ __("message.current_ride") }}</li>'+
+                                                '<li><i class="fa fa-map-signs" aria-hidden="true"></i>: '+driver.driver_ride_request_detail.start_address+'</li>'+
+                                                '<li><i class="fa fa-flag-checkered" aria-hidden="true"></i>: '+driver.driver_ride_request_detail.end_address+'</li>'+
+                                                '</ul></div>';
+                                        }
                                     infowindow.setContent(contentString);
                                     // infowindow.setContent(locations[i].display_name);
                                     infowindow.open(map, marker);
