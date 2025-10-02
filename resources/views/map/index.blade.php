@@ -42,6 +42,7 @@
             var marker = undefined;
             var locations = [];
             var taxiicon = ""
+            var markers = {};
             $(document).ready( function() {
                 // send every second
                 setInterval( async function() {
@@ -63,8 +64,8 @@
 
             function changeMarkerPositions(locations)
             {
+                clearMarkers();
                 var infowindow = new google.maps.InfoWindow();
-                var markers = {};
                 if(locations.length > 0 )
                 {
                     for(i = 0 ; i < locations.length ; i++) {
@@ -112,6 +113,15 @@
                         markers[locations[i].id] = marker;
                     }
                 }
+            }
+
+            function clearMarkers() {
+                for (var key in markers) {
+                    if (markers.hasOwnProperty(key)) {
+                        markers[key].setMap(null);
+                    }
+                }
+                markers = {};
             }
 
             function driverDetail(driver_id) {
