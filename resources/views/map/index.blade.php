@@ -72,7 +72,7 @@
                         // console.log("new "+locations[i].latitude, locations[i].longitude);
 
                         if(markers[locations[i].id] ){
-                            console.log("old "+locations[i].latitude, locations[i].longitude);
+                            console.log("old latlng"+markers[locations[i].id].getPosition().lat(), markers[locations[i].id].getPosition().lng());
                             markers[locations[i].id].setMap(null); // set markers setMap to null to remove it from map
                             delete markers[locations[i].id]; // delete marker instance from markers object
                         }
