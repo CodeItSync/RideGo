@@ -1,6 +1,6 @@
 <x-master-layout :assets="$assets ?? []">
 <div class="container-fluid">
-    <div class="row">            
+    <div class="row">
         <div class="col-lg-12">
             <div class="card card-block card-stretch">
                 <div class="card-body p-0">
@@ -18,7 +18,7 @@
                 <div class="card-body">
                     <div id="map" style="height: 600px;"></div>
                     <div id="maplegend" class="d-none">
-                        
+
                         <div>
                             <img src="{{ asset('images/online.png') }}" /> {{ __('message.online') }}
                         </div>
@@ -43,7 +43,10 @@
             var locations = [];
             var taxiicon = ""
             $(document).ready( function() {
-                driverList(); 
+                // send every second
+                setInterval( async function() {
+                    await driverList();
+                }, 2000);
             });
             function initialize() {
                 var myLatlng = new google.maps.LatLng(20.947940, 72.955786);
@@ -66,12 +69,12 @@
                 {
                     for(i = 0 ; i < locations.length ; i++) {
                         // console.log("new "+locations[i].latitude, locations[i].longitude);
-                    
+
                         if(markers[locations[i].id] ){
                             markers[locations[i].id].setMap(null); // set markers setMap to null to remove it from map
                             delete markers[locations[i].id]; // delete marker instance from markers object
                         }
-                        
+
                         if( locations[i].is_online == 1 && locations[i].is_available == 0) {
                             taxicon = "{{ asset('images/ontrip.png') }}";
                         } else if( locations[i].is_online == 1 ) {
@@ -87,7 +90,7 @@
                             driver_id: locations[i].id
                         });
                         marker.metadata= { id : locations[i].id };
-                        
+
                         google.maps.event.addListener(marker, 'click', (function (marker, i) {
                             return function () {
                                 driver = driverDetail(marker.driver_id);
@@ -119,6 +122,7 @@
                     url: url,
                     async: false,
                     success: function(res) {
+                        console.log(res.data);
                         driver_data = res.data;
                     }
                 });
