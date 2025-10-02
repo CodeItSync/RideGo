@@ -72,7 +72,12 @@
                         // console.log("new "+locations[i].latitude, locations[i].longitude);
 
                         if(markers[locations[i].id] ){
-                            console.log("old latlng"+markers[locations[i].id].getPosition().lat(), markers[locations[i].id].getPosition().lng());
+                            const latlng = markers[locations[i].id].getPosition();
+                            if (latlng.lat() === locations[i].latitude && latlng.lng() === locations[i].longitude) {
+                                console.log("same latlng"+latlng.lat(), latlng.lng());
+                                continue;
+                            }
+                            console.log("remove old "+latlng.lat(), latlng.lng());
                             markers[locations[i].id].setMap(null); // set markers setMap to null to remove it from map
                             delete markers[locations[i].id]; // delete marker instance from markers object
                         }
