@@ -78,42 +78,43 @@
                                 delete markers[locations[i].id]; // delete marker instance from markers object
                             }
                         }
-
-                        if( locations[i].is_online == 1 && locations[i].is_available == 0) {
-                            taxicon = "{{ asset('images/ontrip.png') }}";
-                        } else if( locations[i].is_online == 1 ) {
-                            taxicon = "{{ asset('images/online.png') }}";
-                        } else {
-                            taxicon = "{{ asset('images/offline.png') }}";
-                        }
-                        marker = new google.maps.Marker({
-                            position:  new google.maps.LatLng(locations[i].latitude, locations[i].longitude) ,
-                            map: map,
-                            icon: taxicon,
-                            title: locations[i].display_name,
-                            driver_id: locations[i].id
-                        });
-                        marker.metadata= { id : locations[i].id };
-
-                        google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                            return function () {
-                                driver = driverDetail(marker.driver_id);
-                                service_name = driver.driver_service != null ? driver.driver_service.name : '-';
-                                last_location_update_at = driver.last_location_update_at != null ? driver.last_location_update_at : '-';
-                                driver_view = "{{ route('driver.show', '' ) }}/"+marker.driver_id;
-                                contentString = '<div class="map_driver_detail"><ul class="list-unstyled mb-0">'+
-                                '<li><i class="fa fa-address-card" aria-hidden="true"></i>: '+driver.display_name+'</li>'+
-                                '<li><i class="fa fa-phone" aria-hidden="true"></i>: '+driver.contact_number+'</li>'+
-                                '<li><i class="fa fa-taxi" aria-hidden="true"></i>: '+service_name+'</li>'+
-                                '<li><i class="fa fa-clock" aria-hidden="true"></i>: '+last_location_update_at+'</li>'+
-                                '<li><a href="'+driver_view+'"><i class="fa fa-eye" aria-hidden="true"></i> {{ __("message.view_form_title",[ "form" => __("message.driver") ]) }}</a></li>'+
-                                '</ul></div>';
-                                infowindow.setContent(contentString);
-                                // infowindow.setContent(locations[i].display_name);
-                                infowindow.open(map, marker);
+                        if (!if(markers[locations[i].id] )) {
+                            if( locations[i].is_online == 1 && locations[i].is_available == 0) {
+                                taxicon = "{{ asset('images/ontrip.png') }}";
+                            } else if( locations[i].is_online == 1 ) {
+                                taxicon = "{{ asset('images/online.png') }}";
+                            } else {
+                                taxicon = "{{ asset('images/offline.png') }}";
                             }
-                        })(marker, i));
-                        markers[locations[i].id] = marker;
+                            marker = new google.maps.Marker({
+                                position:  new google.maps.LatLng(locations[i].latitude, locations[i].longitude) ,
+                                map: map,
+                                icon: taxicon,
+                                title: locations[i].display_name,
+                                driver_id: locations[i].id
+                            });
+                            marker.metadata= { id : locations[i].id };
+
+                            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                                return function () {
+                                    driver = driverDetail(marker.driver_id);
+                                    service_name = driver.driver_service != null ? driver.driver_service.name : '-';
+                                    last_location_update_at = driver.last_location_update_at != null ? driver.last_location_update_at : '-';
+                                    driver_view = "{{ route('driver.show', '' ) }}/"+marker.driver_id;
+                                    contentString = '<div class="map_driver_detail"><ul class="list-unstyled mb-0">'+
+                                        '<li><i class="fa fa-address-card" aria-hidden="true"></i>: '+driver.display_name+'</li>'+
+                                        '<li><i class="fa fa-phone" aria-hidden="true"></i>: '+driver.contact_number+'</li>'+
+                                        '<li><i class="fa fa-taxi" aria-hidden="true"></i>: '+service_name+'</li>'+
+                                        '<li><i class="fa fa-clock" aria-hidden="true"></i>: '+last_location_update_at+'</li>'+
+                                        '<li><a href="'+driver_view+'"><i class="fa fa-eye" aria-hidden="true"></i> {{ __("message.view_form_title",[ "form" => __("message.driver") ]) }}</a></li>'+
+                                        '</ul></div>';
+                                    infowindow.setContent(contentString);
+                                    // infowindow.setContent(locations[i].display_name);
+                                    infowindow.open(map, marker);
+                                }
+                            })(marker, i));
+                            markers[locations[i].id] = marker;
+                        }
                     }
                 }
             }
