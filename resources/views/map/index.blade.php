@@ -69,7 +69,7 @@
                 if(locations.length > 0 )
                 {
                     console.log(markers);
-                    console.log(markers[555687] === null ? 'null' : 'not null');
+                    console.log(markers[555687] ? 'null' : 'not null');
                     for(i = 0 ; i < locations.length ; i++) {
                         // console.log("new "+locations[i].latitude, locations[i].longitude);
 
