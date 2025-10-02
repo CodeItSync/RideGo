@@ -68,6 +68,7 @@
                 var infowindow = new google.maps.InfoWindow();
                 if(locations.length > 0 )
                 {
+                    console.log(locations[i]);
                     for(i = 0 ; i < locations.length ; i++) {
                         // console.log("new "+locations[i].latitude, locations[i].longitude);
 
