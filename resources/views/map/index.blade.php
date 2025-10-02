@@ -73,13 +73,10 @@
 
                         if(markers[locations[i].id] ){
                             const latlng = markers[locations[i].id].getPosition();
-                            if (latlng.lat() === locations[i].latitude && latlng.lng() === locations[i].longitude) {
-                                console.log("same latlng"+latlng.lat(), latlng.lng());
-                                continue;
+                            if (latlng.lat() !== locations[i].latitude || latlng.lng() !== locations[i].longitude) {
+                                markers[locations[i].id].setMap(null); // set markers setMap to null to remove it from map
+                                delete markers[locations[i].id]; // delete marker instance from markers object
                             }
-                            console.log("remove old "+latlng.lat(), latlng.lng());
-                            markers[locations[i].id].setMap(null); // set markers setMap to null to remove it from map
-                            delete markers[locations[i].id]; // delete marker instance from markers object
                         }
 
                         if( locations[i].is_online == 1 && locations[i].is_available == 0) {
