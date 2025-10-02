@@ -78,8 +78,8 @@
                                 delete markers[locations[i].id]; // delete marker instance from markers object
                             }
                         }
-                        if (!if(markers[locations[i].id] )) {
-                            if( locations[i].is_online == 1 && locations[i].is_available == 0) {
+                        if (!markers[locations[i].id] ) {
+                            if( locations[i].is_online === 1 && locations[i].is_available === 0) {
                                 taxicon = "{{ asset('images/ontrip.png') }}";
                             } else if( locations[i].is_online == 1 ) {
                                 taxicon = "{{ asset('images/online.png') }}";
