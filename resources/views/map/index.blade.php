@@ -84,7 +84,7 @@
                             taxicon = "{{ asset('images/offline.png') }}";
                         }
                         marker = new google.maps.Marker({
-                            position:  new google.maps.LatLng( parseFloat(locations[i].latitude)  + (Math.random() -.5) / 1500, parseFloat(locations[i].longitude) + (Math.random() -.5) / 1500 ),
+                            position:  {locations[i].latitude, locations[i].longitude},
                             map: map,
                             icon: taxicon,
                             title: locations[i].display_name,
