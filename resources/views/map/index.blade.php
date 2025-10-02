@@ -65,23 +65,19 @@
             function changeMarkerPositions(locations)
             {
                 // clearMarkers();
-                var infowindow = new google.maps.InfoWindow();
+                const infowindow = new google.maps.InfoWindow();
                 if(locations.length > 0 )
                 {
-                    for(i = 0 ; i < locations.length ; i++) {
-                        // console.log("new "+locations[i].latitude, locations[i].longitude);
-
+                    for(let i = 0 ; i < locations.length ; i++) {
                         if(locations[i].id in markers ){
-                            console.log('exist');
                             const latlng = markers[locations[i].id].getPosition();
                             if (latlng.lat().toString() !== locations[i].latitude || latlng.lng().toString() !== locations[i].longitude) {
-                                console.log('update');
-                                markers[locations[i].id].setMap(null); // set markers setMap to null to remove it from map
-                                delete markers[locations[i].id]; // delete marker instance from markers object
+                                markers[locations[i].id].setMap(null);
+                                markers[locations[i].id].setPosition(new google.maps.LatLng(locations[i].latitude, locations[i].longitude));
+                                // delete markers[locations[i].id];
                             }
                         }
                         if (!(locations[i].id in markers) ) {
-                            console.log('new');
                             if( locations[i].is_online === 1 && locations[i].is_available === 0) {
                                 taxicon = "{{ asset('images/ontrip.png') }}";
                             } else if( locations[i].is_online == 1 ) {
