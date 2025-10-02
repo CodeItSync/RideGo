@@ -72,6 +72,7 @@
                         // console.log("new "+locations[i].latitude, locations[i].longitude);
 
                         if(markers[locations[i].id] ){
+                            console.log('update');
                             const latlng = markers[locations[i].id].getPosition();
                             if (latlng.lat() !== locations[i].latitude || latlng.lng() !== locations[i].longitude) {
                                 markers[locations[i].id].setMap(null); // set markers setMap to null to remove it from map
@@ -79,6 +80,7 @@
                             }
                         }
                         if (!markers[locations[i].id] ) {
+                            console.log('new add');
                             if( locations[i].is_online === 1 && locations[i].is_available === 0) {
                                 taxicon = "{{ asset('images/ontrip.png') }}";
                             } else if( locations[i].is_online == 1 ) {
@@ -149,7 +151,6 @@
                     url: url,
                     success: function(res) {
                         if(res.data.length > 0) {
-                            console.log(res.data);
                             changeMarkerPositions(res.data)
                         }
                     }
