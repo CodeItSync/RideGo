@@ -70,6 +70,7 @@
                 {
                     console.log(markers);
                     console.log(555687 in markers ? 'null' : 'not null');
+                    console.log(1518 in markers ? 'null' : 'not null');
                     for(i = 0 ; i < locations.length ; i++) {
                         // console.log("new "+locations[i].latitude, locations[i].longitude);
 
