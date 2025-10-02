@@ -622,9 +622,12 @@ class HomeController extends Controller
 
     public function driverDetail(Request $request)
     {
-        $driver = User::where('id', request('id'))->first();
-        $response = new DriverResource($driver);
-        return $response;
+        $driver = User::with(['driverRideRequestDetail' => function ($query) {
+            $query->whereIn('status', ['accepted', 'arriving', 'arrived', 'in_progress', 'completed'])
+                ->latest()
+                ->limit(1);
+        }])->where('id', request('id'))->first();
+        return new DriverResource($driver);
     }
     public function driverListMap(Request $request)
     {
