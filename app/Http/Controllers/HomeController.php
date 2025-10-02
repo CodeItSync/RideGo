@@ -627,7 +627,7 @@ class HomeController extends Controller
                 ->latest()
                 ->limit(1);
         }])->where('id', request('id'))->first();
-        return $driver;
+        return new DriverResource($driver);
     }
     public function driverListMap(Request $request)
     {
