@@ -68,11 +68,11 @@
                 var infowindow = new google.maps.InfoWindow();
                 if(locations.length > 0 )
                 {
-                    console.log(markers);
                     for(i = 0 ; i < locations.length ; i++) {
                         // console.log("new "+locations[i].latitude, locations[i].longitude);
 
                         if(markers[locations[i].id] ){
+                            console.log("old "+locations[i].latitude, locations[i].longitude);
                             markers[locations[i].id].setMap(null); // set markers setMap to null to remove it from map
                             delete markers[locations[i].id]; // delete marker instance from markers object
                         }
