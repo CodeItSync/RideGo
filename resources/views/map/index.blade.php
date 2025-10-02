@@ -68,13 +68,10 @@
                 var infowindow = new google.maps.InfoWindow();
                 if(locations.length > 0 )
                 {
-                    console.log(markers);
-                    console.log(555687 in markers ? 'null' : 'not null');
-                    console.log(1518 in markers ? 'null' : 'not null');
                     for(i = 0 ; i < locations.length ; i++) {
                         // console.log("new "+locations[i].latitude, locations[i].longitude);
 
-                        if(markers[locations[i].id] ){
+                        if(locations[i].id in markers ){
                             console.log('update');
                             const latlng = markers[locations[i].id].getPosition();
                             if (latlng.lat() !== locations[i].latitude || latlng.lng() !== locations[i].longitude) {
@@ -82,7 +79,7 @@
                                 delete markers[locations[i].id]; // delete marker instance from markers object
                             }
                         }
-                        if (markers[locations[i].id] == null ) {
+                        if (!(locations[i].id in markers) ) {
                             if( locations[i].is_online === 1 && locations[i].is_available === 0) {
                                 taxicon = "{{ asset('images/ontrip.png') }}";
                             } else if( locations[i].is_online == 1 ) {
