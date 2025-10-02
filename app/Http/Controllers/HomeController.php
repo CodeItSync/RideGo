@@ -622,7 +622,7 @@ class HomeController extends Controller
 
     public function driverDetail(Request $request)
     {
-        $driver = User::with(['driverRideRequestDetail' => function ($query) {
+        $driver = User::with(['driver_ride_request_detail' => function ($query) {
             $query->whereIn('status', ['accepted', 'arriving', 'arrived', 'in_progress', 'cancelled', 'completed'])
                 ->latest()
                 ->limit(1);
