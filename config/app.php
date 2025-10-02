@@ -233,4 +233,6 @@ return [
 
     ],
 
+    'google_map_key' => env('GOOGLE_MAP_KEY','AIzaSyA3hV4nQeXH6DLDfYl1z0nV3kN5rQX7mXQ')
+
 ];

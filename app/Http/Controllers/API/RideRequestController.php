@@ -374,7 +374,7 @@ class RideRequestController extends Controller
             return json_custom_response($data, 400);
         }
 
-        $google_map_api_key = env('GOOGLE_MAP_KEY');
+        $google_map_api_key = config('app.google_map_key');
 
         $response = Http::withHeaders([
             'Accept-Language' => request('language'),
@@ -399,7 +399,7 @@ class RideRequestController extends Controller
             return json_custom_response($data, 400);
         }
 
-        $google_map_api_key = env('GOOGLE_MAP_KEY');
+        $google_map_api_key = config('app.google_map_key');
         $response = Http::get('https://maps.googleapis.com/maps/api/place/details/json?placeid=' . $request->placeid . '&key=' . $google_map_api_key);
 
         return $response->json();

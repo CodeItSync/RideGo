@@ -824,7 +824,7 @@ function km_to_mile($km) {
 }
 
 function mighty_get_distance_matrix($pick_lat, $pick_lng, $drop_lat, $drop_lng, $traffic = false) {
-    $google_map_api_key = env('GOOGLE_MAP_KEY');
+    $google_map_api_key = config('app.google_map_key');
 
     $response = Http::withHeaders([
         'Accept-Language' => request('language'),
