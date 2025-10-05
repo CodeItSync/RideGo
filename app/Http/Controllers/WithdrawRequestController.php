@@ -74,7 +74,6 @@ class WithdrawRequestController extends Controller
     {
         $data = $request->all();
         $data['user_id'] = $request->user_id;
-        dd($data['user_id']);
 
         $withdrawrequest_exist = WithdrawRequest::where('user_id', $data['user_id'])->where('status', 0)->exists();
         if($withdrawrequest_exist) {
