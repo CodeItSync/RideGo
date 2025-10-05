@@ -366,99 +366,70 @@ class UserController extends Controller
     public function updateProfile(UserRequest $request)
     {
         $user = Auth::user();
-        if ($request->hasFile('id_card_photo') && $request->hasFile('driving_licence_photo') && $request->hasFile('car_registration_photo')) {
-            $user_data = User::find(\auth()->id());
+        if ($request->has('id') && !empty($request->id)) {
+            $user = User::where('id', $request->id)->first();
+        }
+        if ($user == null) {
+            return json_message_response(__('message.no_record_found'), 400);
+        }
 
-            // for complete car info images
-            if ($request->hasFile('id_card_photo')) {
-                $idCardPath = $request->file('id_card_photo')->store('uploads/id_cards', 'public');
-                $request->merge(['user_detail' => array_merge($request->user_detail ?? [], [
-                    'id_card_photo' => $idCardPath,
-                ])]);
-            }
+        if (!$request->has('user_detail')) {
+            $user->fill($request->except('contact_number'))->update();
+        }
 
-            if ($request->hasFile('driving_licence_photo')) {
-                $drivingLicencePath = $request->file('driving_licence_photo')->store('uploads/licences', 'public');
-                $request->merge(['user_detail' => array_merge($request->user_detail ?? [], [
-                    'driving_licence_photo' => $drivingLicencePath,
-                ])]);
-            }
+        if (isset($request->profile_image) && $request->profile_image != null) {
+            $user->clearMediaCollection('profile_image');
+            $user->addMediaFromRequest('profile_image')->toMediaCollection('profile_image');
+        }
 
-            if ($request->hasFile('car_registration_photo')) {
-                $carRegistrationPath = $request->file('car_registration_photo')->store('uploads/registrations', 'public');
-                $request->merge(['user_detail' => array_merge($request->user_detail ?? [], [
-                    'car_registration_photo' => $carRegistrationPath,
-                ])]);
-            }
+        $user_data = User::find($user->id);
 
-            if ($request->has('user_detail')) {
-                if ($user_data->userDetail != null) {
-                    $user_data->userDetail->fill($request->user_detail)->update();
-                } else {
-                    $user_data->userDetail()->create($request->user_detail);
-                }
-            }
+        // for complete car info images
+        if ($request->hasFile('id_card_photo')) {
+            $idCardPath = $request->file('id_card_photo')->store('uploads/id_cards', 'public');
+            $request->merge(['user_detail' => array_merge($request->user_detail ?? [], [
+                'id_card_photo' => $idCardPath,
+            ])]);
+        }
 
-            if ($user_data->userBankAccount != null && $request->has('user_bank_account')) {
-                $user_data->userBankAccount->fill($request->user_bank_account)->update();
-            } else if ($request->has('user_bank_account') && $request->user_bank_account != null) {
-                $user_data->userBankAccount()->create($request->user_bank_account);
-            }
+        if ($request->hasFile('driving_licence_photo')) {
+            $drivingLicencePath = $request->file('driving_licence_photo')->store('uploads/licences', 'public');
+            $request->merge(['user_detail' => array_merge($request->user_detail ?? [], [
+                'driving_licence_photo' => $drivingLicencePath,
+            ])]);
+        }
 
-            $message = __('message.updated');
-            unset($user_data['media']);
-            $user_data->status = 'pending';
-            $user_data->save();
+        if ($request->hasFile('car_registration_photo')) {
+            $carRegistrationPath = $request->file('car_registration_photo')->store('uploads/registrations', 'public');
+            $request->merge(['user_detail' => array_merge($request->user_detail ?? [], [
+                'car_registration_photo' => $carRegistrationPath,
+            ])]);
+        }
 
-            if ($user_data->user_type == 'driver') {
-                $user_resource = new DriverResource($user_data);
+        if ($request->has('user_detail')) {
+            if ($user_data->userDetail != null) {
+                $user_data->userDetail->fill($request->user_detail)->update();
             } else {
-                $user_resource = new UserResource($user_data);
+                $user_data->userDetail()->create($request->user_detail);
+                $user_data->status = 'pending';
+                $user_data->save();
             }
+        }
+
+        if ($user_data->userBankAccount != null && $request->has('user_bank_account')) {
+            $user_data->userBankAccount->fill($request->user_bank_account)->update();
+        } else if ($request->has('user_bank_account') && $request->user_bank_account != null) {
+            $user_data->userBankAccount()->create($request->user_bank_account);
+        }
+
+        $message = __('message.updated');
+        // $user_data['profile_image'] = getSingleMedia($user_data,'profile_image',null);
+        unset($user_data['media']);
+
+        if ($user_data->user_type == 'driver') {
+            $user_resource = new DriverResource($user_data);
         } else {
-            if ($request->has('id') && !empty($request->id)) {
-                $user = User::where('id', $request->id)->first();
-            }
-            if ($user == null) {
-                return json_message_response(__('message.no_record_found'), 400);
-            }
-
-            if (!$request->has('user_detail')) {
-                $user->fill($request->except('contact_number'))->update();
-            }
-
-            if (isset($request->profile_image) && $request->profile_image != null) {
-                $user->clearMediaCollection('profile_image');
-                $user->addMediaFromRequest('profile_image')->toMediaCollection('profile_image');
-            }
-
-            $user_data = User::find($user->id);
-
-            if ($request->has('user_detail')) {
-                if ($user_data->userDetail != null) {
-                    $user_data->userDetail->fill($request->user_detail)->update();
-                } else {
-                    $user_data->userDetail()->create($request->user_detail);
-                    $user_data->status = 'pending';
-                    $user_data->save();
-                }
-            }
-
-            if ($user_data->userBankAccount != null && $request->has('user_bank_account')) {
-                $user_data->userBankAccount->fill($request->user_bank_account)->update();
-            } else if ($request->has('user_bank_account') && $request->user_bank_account != null) {
-                $user_data->userBankAccount()->create($request->user_bank_account);
-            }
-
-            $message = __('message.updated');
-            // $user_data['profile_image'] = getSingleMedia($user_data,'profile_image',null);
-            unset($user_data['media']);
-
-            if ($user_data->user_type == 'driver') {
-                $user_resource = new DriverResource($user_data);
-            } else {
-                $user_resource = new UserResource($user_data);
-            }
+            $user_resource = new UserResource($user_data);
         }
 
         $response = [
