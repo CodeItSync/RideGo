@@ -13,8 +13,8 @@ use App\Services\FCMService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -390,8 +390,6 @@ class UserController extends Controller
             $request->merge(['user_detail' => array_merge($request->user_detail ?? [], [
                 'id_card_photo' => $idCardPath,
             ])]);
-            $user_data->status = 'pending';
-            $user_data->save();
         }
 
         if ($request->hasFile('driving_licence_photo')) {
@@ -399,8 +397,6 @@ class UserController extends Controller
             $request->merge(['user_detail' => array_merge($request->user_detail ?? [], [
                 'driving_licence_photo' => $drivingLicencePath,
             ])]);
-            $user_data->status = 'pending';
-            $user_data->save();
         }
 
         if ($request->hasFile('car_registration_photo')) {
@@ -408,8 +404,6 @@ class UserController extends Controller
             $request->merge(['user_detail' => array_merge($request->user_detail ?? [], [
                 'car_registration_photo' => $carRegistrationPath,
             ])]);
-            $user_data->status = 'pending';
-            $user_data->save();
         }
 
         if ($request->has('user_detail')) {
@@ -417,9 +411,9 @@ class UserController extends Controller
                 $user_data->userDetail->fill($request->user_detail)->update();
             } else {
                 $user_data->userDetail()->create($request->user_detail);
+                $user_data->status = 'pending';
+                $user_data->save();
             }
-            // $user_data->status = 'pending';
-            $user_data->save();
         }
 
         if ($user_data->userBankAccount != null && $request->has('user_bank_account')) {
