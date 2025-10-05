@@ -366,9 +366,9 @@ class UserController extends Controller
     public function updateProfile(UserRequest $request)
     {
         $user = Auth::user();
-        if ($request->has('id') && !empty($request->id)) {
-            $user = User::where('id', $request->id)->first();
-        }
+//        if ($request->has('id') && !empty($request->id)) {
+//            $user = User::where('id', $request->id)->first();
+//        }
         if ($user == null) {
             return json_message_response(__('message.no_record_found'), 400);
         }
