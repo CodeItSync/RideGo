@@ -25,12 +25,11 @@
     </a>
 {{ Form::close() }}
     @endif
-        {{$id}}
     @if( $data->status == 'active')
-        <a class="btn" data-toggle="modal" data-target="#withdrawModal">$</a>
+        <a class="btn" data-toggle="modal" data-target="#withdrawModal-{{$id}}">$</a>
 
         <!-- Modal -->
-        <div class="modal fade" id="withdrawModal" tabindex="-1" role="dialog" aria-labelledby="withdrawModalLabel" aria-hidden="true">
+        <div class="modal fade" id="withdrawModal-{{$id}}" tabindex="-1" role="dialog" aria-labelledby="withdrawModalLabel-{{$id}}" aria-hidden="true">
           <div class="modal-dialog" role="document">
                 <div class="modal-content">
             {!! Form::open(['route' => ['withdraw.admin_request'], 'method' => 'post' ]) !!}
