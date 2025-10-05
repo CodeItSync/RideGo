@@ -114,7 +114,7 @@ class WithdrawRequestController extends Controller
                         'currency'          => $withdrawrequest->currency,
                         'datetime'          => date('Y-m-d H:i:s'),
                     ];
-
+                    dd(123);
                     WalletHistory::create($wallet_history_data);
                     DB::commit();
                 } catch(\Exception $e) {
@@ -153,7 +153,6 @@ class WithdrawRequestController extends Controller
         if(auth()->check()){
             return redirect()->route('withdrawrequest.index')->withSuccess($message);
         }
-        dd(123);
         return redirect()->back()->withSuccess($message);
     }
 
