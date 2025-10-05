@@ -41,6 +41,7 @@ class HomeController extends Controller
     }
 
     public function sendSms() {
+        dd(storage_path('app/firebase-adminsdk.json'));
         // User::where('contact_number', 'NOT LIKE', '+974-%')->delete();
         return 123;
         // $client = new \SoapClient(null, [
