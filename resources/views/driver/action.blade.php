@@ -8,7 +8,7 @@
     <a class="mr-2" href="{{ route('driver.edit', $id) }}" title="{{ __('message.update_form_title',['form' => __('message.driver') ]) }}"><i class="fas fa-edit text-primary"></i></a>
 {{ Form::close() }}
     @endif
-    
+
     @if( $data->status == 'active' && $auth_user->can('driver show') )
 {{ Form::open(['route' => ['driver.destroy', $id], 'method' => 'delete','data--submit'=>'driver'.$id]) }}
         <a class="mr-2" href="{{ route('driver.show',$id) }}"><i class="fas fa-eye text-secondary"></i></a>
@@ -17,7 +17,7 @@
 
     @if($auth_user->can('driver delete'))
 {{ Form::open(['route' => ['driver.destroy', $id], 'method' => 'delete','data--submit'=>'driver'.$id]) }}
-    <a class="text-danger" href="javascript:void(0)" data--submit="driver{{$id}}" 
+    <a class="text-danger" href="javascript:void(0)" data--submit="driver{{$id}}"
         data--confirmation='true' data-title="{{ __('message.delete_form_title',['form'=> __('message.driver') ]) }}"
         title="{{ __('message.delete_form_title',['form'=>  __('message.driver') ]) }}"
         data-message='{{ __("message.delete_msg") }}'>
@@ -25,9 +25,10 @@
     </a>
 {{ Form::close() }}
     @endif
+        {{$id}}
     @if( $data->status == 'active')
         <a class="btn" data-toggle="modal" data-target="#withdrawModal">$</a>
-        
+
         <!-- Modal -->
         <div class="modal fade" id="withdrawModal" tabindex="-1" role="dialog" aria-labelledby="withdrawModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -46,7 +47,7 @@
                                 <div class="row" @if(app()->getLocale() == 'ar') style="direction: rtl; text-align: right" @endif >
                                     <input type="hidden" name="user_id" value="{{$id}}"/>
                                     <input type="hidden" name="status" value="1"/>
-                    
+
                                     <!--<div class="form-group">-->
                                         {{ Form::label('amount', __('message.amount').' <span class="text-danger">*</span>',['class'=>'form-control-label'], false ) }}
                                         {{ Form::number('amount', old('amount'), ['class' => 'form-control', 'min' => 0, 'step' => 'any', 'required', 'placeholder' => __('message.amount') ]) }}
