@@ -38,7 +38,7 @@ class CommonNotification extends Notification
      */
     public function via($notifiable)
     {
-        $notifications = ['database'];
+        $notifications = ['database'];;
 
         if( env('FIREBASE_SERVER_KEY') && $notifiable->user_type == 'rider') {
             array_push($notifications, 'fcm');
