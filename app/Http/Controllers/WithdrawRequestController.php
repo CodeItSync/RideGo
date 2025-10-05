@@ -37,7 +37,7 @@ class WithdrawRequestController extends Controller
     public function create()
     {
         $pageTitle = __('message.add_form_title',[ 'form' => __('message.withdrawrequest')]);
-        
+
         return view('withdrawrequest.form', compact('pageTitle'));
     }
 
@@ -62,7 +62,7 @@ class WithdrawRequestController extends Controller
         $withdrawrequest = WithdrawRequest::create($data);
 
         $message = __('message.save_form',['form' => __('message.withdrawrequest')]);
-        
+
         if(request()->is('api/*')){
             return json_message_response( $message );
         }
@@ -74,6 +74,7 @@ class WithdrawRequestController extends Controller
     {
         $data = $request->all();
         $data['user_id'] = $request->user_id;
+        dd($data['user_id']);
 
         $withdrawrequest_exist = WithdrawRequest::where('user_id', $data['user_id'])->where('status', 0)->exists();
         if($withdrawrequest_exist) {
@@ -93,7 +94,7 @@ class WithdrawRequestController extends Controller
                     $message = __('message.wallet_balance_insufficient');
                     return json_custom_response(['status' => false, 'message' => $message ]);
                 }
-                try 
+                try
                 {
                     DB::beginTransaction();
                     $withdrawrequest->fill($data)->update();
@@ -102,9 +103,9 @@ class WithdrawRequestController extends Controller
                     $wallet->total_amount      = $wallet->total_amount - $withdrawrequest->amount;
                     $wallet->total_withdrawn   = $wallet->total_withdrawn + $withdrawrequest->amount;
                     $wallet->currency          = $withdrawrequest->currency;
-                    
+
                     $wallet->save();
-                    
+
                     $wallet_history_data = [
                         'user_id'           => $withdrawrequest->user_id,
                         'type'              => 'debit',
@@ -114,7 +115,7 @@ class WithdrawRequestController extends Controller
                         'currency'          => $withdrawrequest->currency,
                         'datetime'          => date('Y-m-d H:i:s'),
                     ];
-        
+
                     WalletHistory::create($wallet_history_data);
                     DB::commit();
                 } catch(\Exception $e) {
@@ -166,7 +167,7 @@ class WithdrawRequestController extends Controller
     {
         $pageTitle = __('message.update_form_title',[ 'form' => __('message.withdrawrequest')]);
         $data = WithdrawRequest::findOrFail($id);
-        
+
         return view('withdrawrequest.form', compact('data', 'pageTitle', 'id'));
     }
 
@@ -186,9 +187,9 @@ class WithdrawRequestController extends Controller
     public function updateStatus(Request $request)
     {
         $withdrawrequest = WithdrawRequest::find($request->id);
-        
+
         $data = $request->all();
-        
+
         $data['user_id'] = $withdrawrequest->user_id;
         $user = User::find($withdrawrequest->user_id);
         if( $data['status'] == 1 )
@@ -199,7 +200,7 @@ class WithdrawRequestController extends Controller
                     $message = __('message.wallet_balance_insufficient');
                     return json_custom_response(['status' => false, 'message' => $message ]);
                 }
-                try 
+                try
                 {
                     DB::beginTransaction();
                     $withdrawrequest->fill($data)->update();
@@ -208,9 +209,9 @@ class WithdrawRequestController extends Controller
                     $wallet->total_amount      = $wallet->total_amount - $withdrawrequest->amount;
                     $wallet->total_withdrawn   = $wallet->total_withdrawn + $withdrawrequest->amount;
                     $wallet->currency          = $withdrawrequest->currency;
-                    
+
                     $wallet->save();
-                    
+
                     $wallet_history_data = [
                         'user_id'           => $withdrawrequest->user_id,
                         'type'              => 'debit',
@@ -220,7 +221,7 @@ class WithdrawRequestController extends Controller
                         'currency'          => $withdrawrequest->currency,
                         'datetime'          => date('Y-m-d H:i:s'),
                     ];
-        
+
                     WalletHistory::create($wallet_history_data);
                     DB::commit();
                 } catch(\Exception $e) {
@@ -289,7 +290,7 @@ class WithdrawRequestController extends Controller
             $status = 'success';
             $message = __('message.delete_form', ['form' => __('message.withdrawrequest')]);
         }
-        
+
         if(request()->is('api/*')){
             return json_message_response( $message );
         }
@@ -304,10 +305,10 @@ class WithdrawRequestController extends Controller
     public function userBankDetail($id)
     {
         $title = __('message.detail_form_title', [ 'form' => __('message.bank') ]);
-        
+
         $data = UserBankAccount::where('user_id',$id)->first();
-        
+
         return view('withdrawrequest.bankdetail', compact('title','data'));
-        
+
     }
 }
