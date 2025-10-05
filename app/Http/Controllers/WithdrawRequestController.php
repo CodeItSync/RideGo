@@ -153,6 +153,7 @@ class WithdrawRequestController extends Controller
         if(auth()->check()){
             return redirect()->route('withdrawrequest.index')->withSuccess($message);
         }
+        dd(123);
         return redirect()->back()->withSuccess($message);
     }
 
