@@ -41,6 +41,7 @@ Route::get('near-by-driver',[ App\Http\Controllers\HomeController::class, 'drive
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('update-profile', [ API\UserController::class, 'updateProfile']);
+    Route::post('update-language', [ API\DashboardController::class, 'updateLanguage']);
     Route::group(['middleware' => [OnlyRidersAndActiveDriversCanPassMiddleware::class]], function () {
         Route::get('driver-document-list', [ API\DriverDocumentController::class, 'getList' ] );
         Route::post('driver-document-save', [ App\Http\Controllers\DriverDocumentController::class, 'store' ] );

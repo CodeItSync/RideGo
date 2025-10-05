@@ -114,7 +114,7 @@ class WithdrawRequestController extends Controller
                         'currency'          => $withdrawrequest->currency,
                         'datetime'          => date('Y-m-d H:i:s'),
                     ];
-                    dd(123);
+
                     WalletHistory::create($wallet_history_data);
                     DB::commit();
                 } catch(\Exception $e) {
