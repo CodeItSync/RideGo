@@ -6,5 +6,12 @@
     "company": "Company",
     "The driver status field is required.": "The driver status field is required.",
     "The company name field is required.": "The company name field is required.",
-    "golden_ride": "Golden Ride"
+    "golden_ride": "Golden Ride",
+    "new_ride_requested": "New Ride Requested",
+    "accepted": "Accepted",
+    "arriving": "Arriving",
+    "arrived": "Arrived",
+    "in_progress": "In Progress",
+    "canceled": "Canceled",
+    "completed": "Completed"
 }

@@ -16,5 +16,12 @@
     "Email" : "البريد الإلكتروني",
     "Password" : "كلمة المرور",
     "Drivers map" : "خريطة السائقين",
-    "Invalid Credentials": "بيانات اعتماد غير صالحة"
+    "Invalid Credentials": "بيانات اعتماد غير صالحة",
+    "new_ride_requested": "تم طلب رحلة جديدة",
+    "accepted": "تم القبول",
+    "arriving": "في الطريق",
+    "arrived": "وصل",
+    "in_progress": "قيد التنفيذ",
+    "canceled": "ملغاة",
+    "completed": "مكتملة"
 }

@@ -96,7 +96,7 @@ class FindDriverForRegularRide extends Command
                 $driver->notify(
                     new FirebaseNotify(
                         [
-                            'title' => $ride_request->status,
+                            'title' => __($ride_request->status),
                             'body' => __('message.ride.new_ride_requested'),
                             'data' => $notification_data,
                         ],

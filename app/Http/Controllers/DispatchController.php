@@ -169,7 +169,7 @@ class DispatchController extends Controller
             $_user->notify(
                 new FirebaseNotify(
                     [
-                        'title' => $result->status,
+                        'title' => __($result->status),
                         'body' => __('message.ride.new_ride_requested'),
                         'data' => $notification_data,
                     ],
