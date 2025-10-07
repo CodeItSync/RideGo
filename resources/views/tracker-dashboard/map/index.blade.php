@@ -71,9 +71,18 @@
                         if(locations[i].id in markers ){
                             const latlng = markers[locations[i].id].getPosition();
                             if (latlng.lat().toString() !== locations[i].latitude || latlng.lng().toString() !== locations[i].longitude) {
-                                // markers[locations[i].id].setMap(null);
-                                markers[locations[i].id].setPosition(new google.maps.LatLng(locations[i].latitude, locations[i].longitude));
+                                markers[locations[i].id].setMap(null);
+                                // markers[locations[i].id].setPosition(new google.maps.LatLng(locations[i].latitude, locations[i].longitude));
                                 // delete markers[locations[i].id];
+                                marker = new google.maps.Marker({
+                                    position:  new google.maps.LatLng(locations[i].latitude, locations[i].longitude) ,
+                                    map: map,
+                                    icon: taxicon,
+                                    title: locations[i].display_name,
+                                    driver_id: locations[i].id
+                                });
+                                marker.metadata= { id : locations[i].id };
+
                             }
                         }
                         if (!(locations[i].id in markers) ) {
