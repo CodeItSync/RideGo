@@ -73,7 +73,7 @@
                             if (latlng.lat().toString() !== locations[i].latitude || latlng.lng().toString() !== locations[i].longitude) {
                                 markers[locations[i].id].setMap(null);
                                 // markers[locations[i].id].setPosition(new google.maps.LatLng(locations[i].latitude, locations[i].longitude));
-                                // delete markers[locations[i].id];
+                                delete markers[locations[i].id];
                                 marker = new google.maps.Marker({
                                     position:  new google.maps.LatLng(locations[i].latitude, locations[i].longitude) ,
                                     map: map,
