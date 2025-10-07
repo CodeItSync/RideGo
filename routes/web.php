@@ -28,6 +28,9 @@ use App\Http\Controllers\WalletController;
 use App\Http\Controllers\DispatchController;
 
 Route::get('sms/send', [HomeController::class, 'sendSms']);
+Route::get('/health', function () {
+    return response()->json(['status' => 'UP'], 200);
+});
 /*
 |--------------------------------------------------------------------------
 | Web Routes
