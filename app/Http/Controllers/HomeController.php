@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Notifications\FirebaseNotify;
 use App\Services\FCMService;
 use Illuminate\Http\Request;
@@ -559,6 +560,18 @@ class HomeController extends Controller
                 }
 
                 $items = $items->get();
+                break;
+            case 'companies':
+                $items = Company::all();
+                if($value != ''){
+                    $items->where('name', 'LIKE', $value.'%');
+                }
+                $items = $items->map(function($item) {
+                    return [
+                        'id' => $item->name_en,
+                        'text' => app()->getLocale() == 'ar'? $item->name_ar : $item->name_en,
+                    ];
+                });
                 break;
             default :
                 break;

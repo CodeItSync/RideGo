@@ -72,7 +72,7 @@ class DriverController extends Controller
         // Save Driver detail...
         $user->userDetail()->create($request->userDetail);
         $user->userBankAccount()->create($request->userBankAccount);
-        
+
         $user->userWallet()->create(['total_amount' => 0 ]);
 /*
         if($user->driverService()->count() > 0)
@@ -111,7 +111,7 @@ class DriverController extends Controller
         $data->cash_earning = Payment::whereHas('riderequest',function ($q) use($id) {
                 $q->where('driver_id',$id);
             })->where('payment_status', 'paid')->where('payment_type', 'cash')->value(DB::raw('SUM(admin_commission + driver_commission)')) ?? 0;
-        
+
         $data->admin_commission = Payment::whereHas('riderequest',function ($q) use($id) {
             $q->where('driver_id', $id);
         })->where('payment_status', 'paid')->sum('admin_commission') ?? 0;
@@ -119,7 +119,7 @@ class DriverController extends Controller
         $data->wallet_earning = Payment::whereHas('riderequest',function ($q) use($id) {
                 $q->where('driver_id',$id);
             })->where('payment_status', 'paid')->where('payment_type', 'wallet')->sum('driver_commission') ?? 0;
-        
+
         $data->total_earning = $data->cash_earning + $data->wallet_earning;
 
         $data->driver_earning = Payment::whereHas('riderequest',function ($q) use($id) {
@@ -143,7 +143,7 @@ class DriverController extends Controller
         $data = User::where('user_type', 'driver')->with('userDetail','userBankAccount')->findOrFail($id);
         $profileImage = getSingleMedia($data, 'profile_image');
         $assets = ['phone'];
-/* 
+/*
         $selected_service = $data->driverService->mapWithKeys(function ($item) {
             return [ $item->service_id => optional($item->service)->name ];
         });
@@ -161,7 +161,7 @@ class DriverController extends Controller
     public function update(DriverRequest $request, $id)
     {
         $user = User::with('userDetail')->findOrFail($id);
-        
+
         $request['password'] = $request->password != '' ? bcrypt($request->password) : $user->password;
 
         $request['display_name'] = $request->first_name.' '. $request->last_name;
@@ -252,10 +252,10 @@ class DriverController extends Controller
     {
         $pageTitle = __('message.list_form_title',['form' => __('message.driver_earning')] );
         $auth_user = authSession();
-        
+
         $button = '';
         $assets = ['datatable'];
-        
+
         return $dataTable->render('global.datatable', compact('pageTitle','button','auth_user'));
     }
 }

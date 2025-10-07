@@ -86,7 +86,7 @@
                                     {{ Form::label('last_name',__('message.last_name').' <span class="text-danger">*</span>',['class'=>'form-control-label'], false ) }}
                                     {{ Form::text('last_name',old('last_name'),['placeholder' => __('message.last_name'),'class' =>'form-control','required']) }}
                                 </div>
-                                
+
                                 <!--<div class="form-group col-md-6">-->
                                 <!--    {{ Form::label('email',__('message.email').' <span class="text-danger">*</span>',['class'=>'form-control-label'], false ) }}-->
                                 <!--    {{ Form::email('email', old('email'), [ 'placeholder' => __('message.email'), 'class' => 'form-control', 'required' ]) }}-->
@@ -107,7 +107,7 @@
                                 <div class="form-group col-md-6">
                                     {{ Form::label('contact_number',__('message.contact_number').' <span class="text-danger">*</span>',['class'=>'form-control-label'], false ) }}
                                     {{ Form::text('contact_number', old('contact_number'),[ 'placeholder' => __('message.contact_number'), 'class' => 'form-control', 'id' => 'phone' ]) }}
-                                    
+
                                     {{ Form::hidden('dial_code', old('dial_code'), ['id' => 'dial-code-input']) }}
                                 </div>
 
@@ -131,11 +131,25 @@
 
                                  <!-- Service List -->
                                 <div class="form-group col-md-6">
-                                    {{ Form::label('service_id', __('message.select_name',[ 'select' => __('message.service') ]),[ 'class' => 'form-control-label' ]) }} 
+                                    {{ Form::label('service_id', __('message.select_name',[ 'select' => __('message.service') ]),[ 'class' => 'form-control-label' ]) }}
                                     {{ Form::select('service_id', isset($id) ? [ optional($data->service)->id => optional($data->service)->name ] : [], old('service_id'), [
                                             'class' => 'select2js form-group service',
                                             'data-placeholder' => __('message.select_name',[ 'select' => __('message.service') ]),
                                             'data-ajax--url' => route('ajax-list', ['type' => 'service']),
+                                        ])
+                                    }}
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    {{ Form::label('driver_type', __('Select status',[ 'select' => __('Driver Status') ]),[ 'class' => 'form-control-label' ]) }}
+                                    {{ Form::select('driver_type',[ 'freelancer' => __('freelancer') ,'company' => __('company') ], old('driver_type') ,[ 'class' =>'form-control select2js']) }}
+                                </div>
+                                <div class="form-group col-md-6" id="driver_company_name_div">
+                                    {{ Form::label('driver_company_name', __('message.select_name',[ 'select' => __('company') ]),[ 'class' => 'form-control-label' ]) }}
+                                    {{ Form::select('driver_company_name', [ optional($data->companies)->key => optional($data->companies)->name ], old('driver_company_name'), [
+                                            'class' => 'select2js form-group company',
+                                            'data-placeholder' => __('message.select_name',[ 'select' => __('company') ]),
+                                            'data-ajax--url' => route('ajax-list', ['type' => 'companies']),
                                         ])
                                     }}
                                 </div>
@@ -166,12 +180,12 @@
                                     {{ Form::label('car_color',__('message.car_color').' <span class="text-danger">*</span>',['class'=>'form-control-label'], false ) }}
                                     {{ Form::text('userDetail[car_color]', old('userDetail[car_color]'), ['class' => 'form-control', 'placeholder' => __('message.car_color')]) }}
                                 </div>
-                                
+
                                 <div class="form-group col-md-6">
                                     {{ Form::label('car_plate_number',__('message.car_plate_number').' <span class="text-danger">*</span>',['class'=>'form-control-label'], false ) }}
                                     {{ Form::text('userDetail[car_plate_number]', old('userDetail[car_plate_number]'), ['class' => 'form-control', 'placeholder' => __('message.car_plate_number')]) }}
                                 </div>
-                                
+
                                 <div class="form-group col-md-6">
                                     {{ Form::label('car_production_year',__('message.car_production_year').' <span class="text-danger">*</span>',['class'=>'form-control-label'], false ) }}
                                     {{ Form::text('userDetail[car_production_year]', old('userDetail[car_production_year]'), ['class' => 'form-control', 'placeholder' => __('message.car_production_year')]) }}
@@ -230,4 +244,25 @@
         </div>
         {!! Form::close() !!}
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            let $driverType = $('#driver_type').select2();
+            if ($driverType.val() === 'freelancer') {
+                $('#driver_company_name_div').hide();
+            } else {
+                $('#driver_company_name_div').show();
+            }
+
+            $driverType.on('change', function() {
+                let value = $(this).val();
+                console.log(value === 'freelancer')
+                if (value === 'freelancer') {
+                    $('#driver_company_name_div').hide();
+                } else {
+                    $('#driver_company_name_div').show();
+                }
+            });
+        });
+    </script>
 </x-master-layout>
