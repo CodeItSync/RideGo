@@ -144,6 +144,7 @@
                                     {{ Form::label('driver_type', __('Select status',[ 'select' => __('Driver Status') ]),[ 'class' => 'form-control-label' ]) }}
                                     {{ Form::select('driver_type',[ 'freelancer' => __('freelancer') ,'company' => __('company') ], old('driver_type') ,[ 'class' =>'form-control select2js']) }}
                                 </div>
+
                                 <div class="form-group col-md-6" id="driver_company_name_div">
                                     {{ Form::label('driver_company_name', __('message.select_name',[ 'select' => __('company') ]),[ 'class' => 'form-control-label' ]) }}
                                     {{ Form::select('driver_company_name', [ optional($data->companies)->key => optional($data->companies)->name ], old('driver_company_name'), [
